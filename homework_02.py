@@ -64,20 +64,43 @@ var = str(input(
     'Выберете один из 3х пунктов: \n- 1.Регистрация нового пользователя\n- 2.Авторизация в системе\n- 3.Восстановление пароля по кодовому слову\n\n'))
 if var == '1':
     login = input('Введите логин: ')
+    while login == '':
+        login = input('Введите логин: ')
     all_login = get_user_login(login)
     if len(all_login) > 0:
+
         login = input('Логин уже существует Введите новый логин: ')
+        while login == '':
+            login = input('Логин уже существует Введите новый логин: ')
+
         Password = input('Введите Пароль: ')
-        Code = input('Введите Код доступа: ')
+        while Password == '':
+            Password = input('Введите Пароль: ')
+
+        Code = int(input('Введите Код доступа: '))
+        while Code == '':
+            Code = int(input('Введите Код доступа: '))
+
         add_user(login, Password, Code)
     else:
         Password = input('Введите Пароль: ')
-        Code = input('Введите Код доступа: ')
+        while Password == '':
+            Password = input('Введите Пароль: ')
+
+        Code = int(input('Введите Код доступа: '))
+        while Code == '':
+            Code = int(input('Введите Код доступа: '))
         add_user(login, Password, Code)
 
 elif var == '2':
     login = input('Введите логин: ')
+    while login == '':
+        login = input('Введите логин: ')
+
     Password = input('Введите Пароль: ')
+    while Password == '':
+        Password = input('Введите Пароль: ')
+
     auth_user = get_auth_user(login, Password)
     if len(auth_user) > 0:
         print("Вы авторизованы")
@@ -86,10 +109,18 @@ elif var == '2':
 
 elif var == '3':
     login = input('Введите логин: ')
-    code = input('Введите скретный код: ')
-    recovery = password_recovery(login, code)
+    while login == '':
+        login = input('Введите логин: ')
+
+    Code = int(input('Введите Код доступа: '))
+    while Code == '':
+        Code = int(input('Введите Код доступа: '))
+
+    recovery = password_recovery(login, Code)
     if len(recovery) > 0:
-        password = input('Введите новый пароль: ')
-        new_password(password, login)
+        Password = input('Введите новый пароль: ')
+        while Password == '':
+            Password = input('Введите новый пароль: ')
+        new_password(Password, login)
     else:
         print('Пользователя с указанными данными не существует')
