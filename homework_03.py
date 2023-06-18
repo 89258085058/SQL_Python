@@ -91,6 +91,12 @@ def set_new_sum_minus(results):
         cur.execute(f"""UPDATE users_balance SET Balance_EUR = {float(many - results)} WHERE UserID = 1""")
         db.commit()
 
+def input_sum():
+    sum = input("Какая сумма Вас интересует?")
+    while not sum.isdigit():
+        sum = input("Ощибка ввода\nВведиде сумму цифрами")
+    return sum
+
 
 # Информация для пользователя
 def new_sum():
@@ -119,11 +125,7 @@ var = int(input("Добро пожаловать в наш обменный пу
 
 if var == 1:
     rubels = get_rubels()
-    try:
-        sum = int(input("Какая сумма Вас интересует?"))
-    except:
-        sum = int(input("Вы ввели неверное значение попоробуйте еще раз\nКакая сумма Вас интересует?"))
-
+    sum = input_sum()
     val = int(input("Какую валюту готовы предложить взамен?"
                     "\n1. USD"
                     "\n2. EUR"
@@ -131,20 +133,16 @@ if var == 1:
                     ))
     if val == 1:
         val = 'usd'
-        res = sum / 70
-        account_verification(round(res, 2), get_usd(), val, sum, 'rub')
+        res = int(sum) / 70
+        account_verification(round(res, 2), get_usd(), val, int(sum), 'rub')
     if val == 2:
         val = 'eur'
-        res = sum / 80
-        account_verification(round(res, 2), get_eur(), val, sum, 'rub')
+        res = int(sum) / 80
+        account_verification(round(res, 2), get_eur(), val, int(sum), 'rub')
 
 if var == 2:
     rubels = get_rubels()
-    try:
-        sum = int(input("Какая сумма Вас интересует?"))
-    except:
-        sum = int(input("Вы ввели неверное значение попоробуйте еще раз\nКакая сумма Вас интересует?"))
-
+    sum = input_sum()
     val = int(input("Какую валюту готовы предложить взамен?"
                     "\n1. RUB"
                     "\n2. EUR"
@@ -152,20 +150,16 @@ if var == 2:
                     ))
     if val == 1:
         val = 'rub'
-        res = sum * 70
-        account_verification(round(res, 2), get_rubels(), val, sum, 'usd')
+        res = int(sum) * 70
+        account_verification(round(res, 2), get_rubels(), val, int(sum), 'usd')
     if val == 2:
         val = 'eur'
-        res = sum * 0.87
-        account_verification(round(res, 2), get_eur(), val, sum, 'usd')
+        res = int(sum) * 0.87
+        account_verification(round(res, 2), get_eur(), val, int(sum), 'usd')
 
 if var == 3:
     rubels = get_rubels()
-    try:
-        sum = int(input("Какая сумма Вас интересует?"))
-    except:
-        sum = int(input("Вы ввели неверное значение попоробуйте еще раз\nКакая сумма Вас интересует?"))
-
+    sum = input_sum()
     val = int(input("Какую валюту готовы предложить взамен?"
                     "\n1. RUB"
                     "\n2. USD"
@@ -173,9 +167,9 @@ if var == 3:
                     ))
     if val == 1:
         val = 'rub'
-        res = sum * 80
-        account_verification(round(res, 2), get_rubels(), val, sum, 'eur')
+        res = int(sum) * 80
+        account_verification(round(res, 2), get_rubels(), val, int(sum), 'eur')
     if val == 2:
         val = 'usd'
-        res = sum * 1.15
-        account_verification(round(res, 2), get_usd(), val, sum, 'eur')
+        res = int(sum) * 1.15
+        account_verification(round(res, 2), get_usd(), val, int(sum), 'eur')
