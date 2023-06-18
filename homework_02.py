@@ -59,68 +59,75 @@ def new_password(new_pass, login):
     print('Пароль успешно обновлен')
 
 
-# 4. Основной функционал
-var = str(input(
-    'Выберете один из 3х пунктов: \n- 1.Регистрация нового пользователя\n- 2.Авторизация в системе\n- 3.Восстановление пароля по кодовому слову\n\n'))
-if var == '1':
+def input_main_data():
+    var = str(input(
+        'Выберете один из 3х пунктов: \n- 1.Регистрация нового пользователя\n- 2.Авторизация в системе\n- 3.Восстановление пароля по кодовому слову\n\n'))
+    return var
+
+
+def login_input():
     login = input('Введите логин: ')
     while login == '':
         login = input('Введите логин: ')
-    all_login = get_user_login(login)
-    if len(all_login) > 0:
+    return login
 
-        login = input('Логин уже существует Введите новый логин: ')
-        while login == '':
-            login = input('Логин уже существует Введите новый логин: ')
 
-        Password = input('Введите Пароль: ')
-        while Password == '':
-            Password = input('Введите Пароль: ')
-
-        Code = int(input('Введите Код доступа: '))
-        while Code == '':
-            Code = int(input('Введите Код доступа: '))
-
-        add_user(login, Password, Code)
-    else:
-        Password = input('Введите Пароль: ')
-        while Password == '':
-            Password = input('Введите Пароль: ')
-
-        Code = int(input('Введите Код доступа: '))
-        while Code == '':
-            Code = int(input('Введите Код доступа: '))
-        add_user(login, Password, Code)
-
-elif var == '2':
-    login = input('Введите логин: ')
-    while login == '':
-        login = input('Введите логин: ')
-
+def password_input():
     Password = input('Введите Пароль: ')
     while Password == '':
         Password = input('Введите Пароль: ')
+    return Password
 
+
+def code_input():
+    Code = input('Введите Код доступа: ')
+    while not Code.isdigit():
+        Code = input('Введите Код доступа: ')
+    return Code
+
+
+def first_choice():
+    login = login_input()
+    all_login = get_user_login(login)
+
+    if len(all_login) > 0:
+        login = input('Логин уже существует Введите новый логин: ')
+        while login == '':
+            login = input('Логин уже существует Введите новый логин: ')
+        Password = password_input()
+        Code = code_input()
+        add_user(login, Password, Code)
+    else:
+        Password = password_input()
+        Code = code_input()
+        add_user(login, Password, Code)
+
+
+def second_choice():
+    login = login_input()
+    Password = password_input()
     auth_user = get_auth_user(login, Password)
     if len(auth_user) > 0:
         print("Вы авторизованы")
     else:
         print('Пользователя с указанными данными не существует')
 
-elif var == '3':
-    login = input('Введите логин: ')
-    while login == '':
-        login = input('Введите логин: ')
 
-    Code = int(input('Введите Код доступа: '))
-    while Code == '':
-        Code = int(input('Введите Код доступа: '))
-
-    recovery = password_recovery(login, Code)
+def third_choice():
+    login = login_input()
+    code = code_input()
+    recovery = password_recovery(login, code)
     if len(recovery) > 0:
-        Password = input('Введите новый пароль: ')
-        while Password == '':
-            Password = input('Введите новый пароль: ')
-        new_password(Password, login)
+        password = password_input()
+        new_password(password, login)
     else:
         print('Пользователя с указанными данными не существует')
+
+
+var = input_main_data()
+if var == '1':
+    first_choice()
+elif var == '2':
+    second_choice()
+elif var == '3':
+    third_choice()
